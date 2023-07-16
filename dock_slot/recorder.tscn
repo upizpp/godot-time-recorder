@@ -1,0 +1,108 @@
+[gd_scene load_steps=4 format=3 uid="uid://cibopaswnx5t0"]
+
+[ext_resource type="Script" path="res://addons/code-time-recorder/dock_slot/recorder.gd" id="1_ewefg"]
+[ext_resource type="Script" path="res://addons/code-time-recorder/dock_slot/TodoList.gd" id="2_klkmv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjdbd"]
+bg_color = Color(0, 0, 0, 0.247059)
+
+[node name="Recorder" type="Control"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ewefg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProjectNow" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "当前时间:
+2023-05-27 17:49:40"
+
+[node name="ProjectPast" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "项目创建时间：
+2023-05-27 11:21:36"
+
+[node name="ProjectUsed" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "项目编辑时间：
+5小时13分钟15秒"
+
+[node name="HSeparator1" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentScript" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "当前脚本：
+res://test.gd"
+clip_text = true
+
+[node name="ScriptUsed" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "脚本编辑时间：
+999年"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GodotPast" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "引擎开始时间：
+2021-10-27 11:56:17"
+
+[node name="GodotUsed" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "引擎用时间：
+1年5月4日14小时51分钟22秒"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TodoList" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_klkmv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TodoList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TodoList/HBoxContainer"]
+layout_mode = 2
+text = "TODO 列表："
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TodoList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HideButton" type="CheckBox" parent="VBoxContainer/TodoList/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+
+[node name="AddButton" type="Button" parent="VBoxContainer/TodoList/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "+"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TodoList"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sjdbd")
+
+[node name="List" type="VBoxContainer" parent="VBoxContainer/TodoList/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="pressed" from="VBoxContainer/TodoList/HBoxContainer/HBoxContainer/HideButton" to="VBoxContainer/TodoList" method="_on_hide_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TodoList/HBoxContainer/HBoxContainer/AddButton" to="VBoxContainer/TodoList" method="_on_add_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
